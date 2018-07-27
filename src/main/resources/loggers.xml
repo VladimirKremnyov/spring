@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans">
+
+    <bean id="date" class="java.util.Date" scope="prototype"/>
+
+    <bean id="defaultEventLogger" class="loggers.ConsoleEventLogger"/>
+
+    <bean id="consoleEventLogger" class="loggers.ConsoleEventLogger"/>
+
+    <bean id="fileEventLogger" class="loggers.FileEventLogger" init-method="init">
+        <constructor-arg value="test.txt"/>
+    </bean>
+
+    <bean id="cacheFileEventLogger" class="loggers.CacheFileEventLogger" parent="fileEventLogger">
+        <constructor-arg value="100"/>
+    </bean>
+
+    <bean id="combinedEventLogger" class="loggers.CombinedEventLogger">
+        <constructor-arg>
+            <list>
+                <ref bean="consoleEventLogger"/>
+                <ref bean="fileEventLogger"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+</beans>
